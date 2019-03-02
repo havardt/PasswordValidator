@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;  
 using EzPasswordValidator.Checks;
 
 namespace EzPasswordValidator.Validators
@@ -134,6 +135,16 @@ namespace EzPasswordValidator.Validators
             }
             return result;
         }
+		
+		/// <summary>
+        /// Validates the specified password asynchronous. This method should be used
+        /// when custom checks include long running operations.
+        /// </summary>
+        /// <param name="password">The password to check.</param>
+        /// <returns>
+        ///   <c>true</c> if the password passes all checks; <c>false</c> otherwise.
+        /// </returns>
+        public async Task<bool> ValidateAsync(string password) => await Task.Run(() => Validate(password));
 
         /// <summary>
         /// Convenience method that adds the check types represented by the Int32 value.
