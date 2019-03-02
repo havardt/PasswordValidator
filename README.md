@@ -4,9 +4,10 @@ A .NET standard library for easy password validation.
 This library defines 11 predefined checks and an easy way to implement custom checks.
 
 ## Usage
-1. Add the .dll file into your project.
+1. Download the .dll file. (See releases)
+2. Add the .dll file into your project.
    In Visual Studio go to: <i>Solution explorer > Dependencies > Add reference > browse </i> and select the .dll file.<br/>
-2. Code
+3. Code
 
 Example validator with predefined basic checks.
 ```C#
