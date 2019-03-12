@@ -1,4 +1,5 @@
 # EzPasswordValidator
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)    
 A .NET standard library for easy password validation.
 
 This library defines 11 predefined checks and an easy way to implement custom checks.
@@ -63,3 +64,4 @@ validator.RemoveCheck("MyCustomCheckTag"); //Removes the check with the given ta
 ## License
 
 This project is licensed under the MIT License - see [LICENSE.md](LICENSE.md) for details.
+
