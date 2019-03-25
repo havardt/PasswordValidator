@@ -2,7 +2,19 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)    
 A .NET standard library for easy password validation.
 
-This library defines 11 predefined checks and an easy way to implement custom checks.
+This library defines 11 predefined checks and an easy way to implement custom checks.     
+**The following checks are predefined:**
+* Length check (Minimum allowed password length)
+* Check for numbers
+* Check for letters
+* Check for symbols
+* Check for case (upper and lower)
+* Check for number sequences
+* Check for number repetition
+* Check for number location (not only front or back)
+* Check for letter sequences
+* Check for letter repetition
+* Check for symbol repetition
 
 ## Usage
 1. Download the .dll file. (See releases)
