@@ -13,7 +13,6 @@ This library defines 11 predefined checks and an easy way to implement custom ch
 Example validator with predefined basic checks.
 ```C#
 var validator = new PasswordValidator(CheckTypes.Basic);
-validator.RequiredLength = 10; //Minimum required password length
 ```
 
 ##### Validate
