@@ -7,7 +7,7 @@ namespace EzPasswordValidator.Checks
     /// A class representing a check for upper- and lower-case letters.
     /// </summary>
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
-    public class CaseCheck : Check
+    public sealed class CaseCheck : Check
     {
         /// <inheritdoc />
         /// <summary>

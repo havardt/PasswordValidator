@@ -7,7 +7,7 @@ namespace EzPasswordValidator.Checks
     /// A class representing a check for number repetition.
     /// </summary>
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
-    public class NumberRepetitionCheck : Check
+    public sealed class NumberRepetitionCheck : Check
     {
         /// <inheritdoc />
         /// <summary>

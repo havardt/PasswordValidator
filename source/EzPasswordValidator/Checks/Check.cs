@@ -2,7 +2,6 @@
 
 namespace EzPasswordValidator.Checks
 {
-    /// <inheritdoc />
     /// <summary>
     /// A class representing a single check/test/validation executed on the password.
     /// </summary>

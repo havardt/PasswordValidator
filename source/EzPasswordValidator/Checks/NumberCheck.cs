@@ -7,7 +7,7 @@ namespace EzPasswordValidator.Checks
     /// A class checking for numbers in passwords.
     /// </summary>
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
-    public class NumberCheck : Check
+    public sealed class NumberCheck : Check
     {
         /// <inheritdoc />
         /// <summary>
