@@ -8,7 +8,7 @@ namespace EzPasswordValidator.Checks
     /// are not only in the front or back of password.
     /// </summary>
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
-    public class NumberPositionCheck : Check
+    public sealed class NumberPositionCheck : Check
     {
         /// <inheritdoc />
         /// <summary>

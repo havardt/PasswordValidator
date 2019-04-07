@@ -5,7 +5,7 @@
     /// A class for checking password length.
     /// </summary>
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
-    public class LengthCheck : Check
+    public sealed class LengthCheck : Check
     {
         /// <summary>
         /// The default required length of the password.

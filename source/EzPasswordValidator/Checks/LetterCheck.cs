@@ -7,7 +7,7 @@ namespace EzPasswordValidator.Checks
     /// A class checking for letters in passwords.
     /// </summary>
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
-    public class LetterCheck : Check
+    public sealed class LetterCheck : Check
     {
         /// <inheritdoc />
         /// <summary>
