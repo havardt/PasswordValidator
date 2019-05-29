@@ -41,8 +41,10 @@
         /// <inheritdoc />
         /// <summary>
         /// Checks if the given password is equal to or longer than the required minimum length.
+        /// The password is trimmed (trailing and leading white space is removed) before checking length.
+        /// <c>null</c> is always invalid.
         /// </summary>
         protected override bool OnExecute(string password) =>
-            !string.IsNullOrWhiteSpace(password) && password.Length >= RequiredLength;
+            !string.IsNullOrWhiteSpace(password) && password.Trim().Length >= RequiredLength;
     }
 }
