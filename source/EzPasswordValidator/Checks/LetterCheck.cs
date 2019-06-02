@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
+﻿
 namespace EzPasswordValidator.Checks
 {
     /// <inheritdoc />
@@ -23,7 +22,17 @@ namespace EzPasswordValidator.Checks
         /// <summary>
         /// Checks that the password contains at least one letter.
         /// </summary>
-        protected override bool OnExecute(string password) => 
-            Regex.IsMatch(password, "^.*[A-Za-z]+.*$");
+        protected override bool OnExecute(string password)
+        {
+            foreach (char c in password)
+            {
+                if (char.IsLetter(c))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

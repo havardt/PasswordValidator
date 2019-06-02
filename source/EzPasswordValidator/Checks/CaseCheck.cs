@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
 
 namespace EzPasswordValidator.Checks
 {
@@ -22,6 +22,7 @@ namespace EzPasswordValidator.Checks
         /// Checks that the password contains at least one upper- and lower-case letter.
         /// </summary>
         protected override bool OnExecute(string password) =>
-            Regex.IsMatch(password, "^.*([a-z]+.*[A-Z]+|[A-Z]+.*[a-z]+)+.*$");
+            password.Any(char.IsUpper) && password.Any(char.IsLower);
+
     }
 }

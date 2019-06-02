@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
 
 namespace EzPasswordValidator.Checks
 {
@@ -9,6 +9,13 @@ namespace EzPasswordValidator.Checks
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
     public sealed class SymbolCheck : Check
     {
+
+        public static HashSet<char> SymbolsHashSet = new HashSet<char>(new[]
+        {
+            '~','!','@','#','$','%','^','&','*','(',')','_','-','+','=','[','{','}',']','\'','"',';',
+            ':','/','?','<','>',',','.','`','£','§','€'
+        });
+
         /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="EzPasswordValidator.Checks.SymbolCheck" /> class.
@@ -20,10 +27,21 @@ namespace EzPasswordValidator.Checks
         /// <inheritdoc />
         /// <summary>
         /// Checks that the password contains at least one symbol.
-        /// Symbols are here defined as any character that is not a digit or
-        /// letter in the range A through Z.
         /// </summary>
-        protected override bool OnExecute(string password) =>
-            Regex.IsMatch(password, "^.*[^0-9A-Za-z].*$");
+        /// <remarks>
+        /// Note that this check only checks for the most common symbols, <see cref="SymbolsHashSet"/>.
+        /// </remarks>
+        protected override bool OnExecute(string password)
+        {
+            foreach (char c in password)
+            {
+                if (SymbolsHashSet.Contains(c))
+                {
+                    return true;
+                }   
+            }
+
+            return false;
+        }
     }
 }

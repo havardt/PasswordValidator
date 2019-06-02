@@ -20,7 +20,8 @@ namespace EzPasswordValidator.Checks
         /// <inheritdoc />
         /// <summary>
         /// Checks if the password contains an alphabetical letter sequence consisting of four or more
-        /// characters. Two common three letter sequences are added: abc and xyz.
+        /// characters. Two common three letter sequences are added: abc and xyz. Note that this check
+        /// only supports ISO basic latin alphabet (A-Za-z).
         /// </summary>
         /// <returns>
         ///   <c>true</c> if the password does NOT contain a letter sequence; <c>false</c> otherwise.
