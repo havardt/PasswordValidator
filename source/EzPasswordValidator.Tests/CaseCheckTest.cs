@@ -21,6 +21,15 @@ namespace EzPasswordValidator.Tests
         public void WhenPasswordHasUpperAndLowerEnglishCharsThenPasswordIsValid(string validPsw) => 
             Assert.IsTrue(_check.Execute(validPsw));
 
+        /// <summary>The case check should support non-english alphabet characters.</summary>
+        [DataRow("øøÆÆ")]
+        [DataRow("ÅÅøø")]
+        [DataRow("æØæ")]
+        [DataRow("ÆøÅ")]
+        [DataTestMethod]
+        public void WhenPasswordHasUpperAndLowerNonEnglishCharsThenPasswordIsValid(string validPsw) =>
+            Assert.IsTrue(_check.Execute(validPsw));
+
         [TestMethod]
         public void WhenPasswordHasOnlyUpperCaseCharsThenPasswordIsNotValid()
         {

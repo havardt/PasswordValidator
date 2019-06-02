@@ -14,6 +14,9 @@ namespace EzPasswordValidator.Tests
         [DataRow("A12345")]
         [DataRow("12345A")]
         [DataRow("123A45")]
+        [DataRow("Ø12345")]
+        [DataRow("12345Ø")]
+        [DataRow("123Ø45")]
         [DataTestMethod]
         public void WhenPasswordContainsExactlyOneLetterThenPasswordIsValid(string validPsw) => 
             Assert.IsTrue(_check.Execute(validPsw));
@@ -21,6 +24,7 @@ namespace EzPasswordValidator.Tests
         [DataRow("ABC")]
         [DataRow("bbb")]
         [DataRow("aBc")]
+        [DataRow("æÅø")]
         [DataTestMethod]
         public void WhenPasswordContainsOnlyLettersThenPasswordIsValid(string validPsw) =>
             Assert.IsTrue(_check.Execute(validPsw));

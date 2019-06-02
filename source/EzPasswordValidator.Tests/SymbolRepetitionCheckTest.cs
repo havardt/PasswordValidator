@@ -26,14 +26,22 @@ namespace EzPasswordValidator.Tests
         public void WhenPasswordContainsSymbolRepetitionOfLengthTwoThenPasswordIsValid(string psw) => 
             Assert.IsTrue(_check.Execute(psw));
 
-        [DataRow("test///")]
-        [DataRow("///test")]
-        [DataRow("te///st")]
+        [DataRow("test$///")]
+        [DataRow("$///test")]
+        [DataRow("te///$st")]
         [DataRow("test#####")]
         [DataRow("#####test")]
         [DataRow("te#####st")]
         [DataTestMethod]
         public void WhenPasswordContainsSymbolRepetitionOfLengthThreeOrLongerThenPasswordIsValid(string psw) => 
             Assert.IsFalse(_check.Execute(psw));
+
+        [TestMethod]
+        public void WhenPasswordContainsThreeDifferentSymbolsInSequenceThenPasswordIsInvalid()
+        {
+            const string psw = "test@#$";
+
+            Assert.IsTrue(_check.Execute(psw));
+        }
     }
 }
