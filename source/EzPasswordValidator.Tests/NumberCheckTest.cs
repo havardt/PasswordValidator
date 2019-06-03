@@ -1,5 +1,4 @@
-﻿using System;
-using EzPasswordValidator.Checks;
+﻿using EzPasswordValidator.Checks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EzPasswordValidator.Tests

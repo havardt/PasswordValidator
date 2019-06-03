@@ -45,6 +45,6 @@
         /// <c>null</c> is always invalid.
         /// </summary>
         protected override bool OnExecute(string password) =>
-            !string.IsNullOrWhiteSpace(password) && password.Trim().Length >= RequiredLength;
+            password != null && password.Trim().Length >= RequiredLength;
     }
 }

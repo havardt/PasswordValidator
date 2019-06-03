@@ -46,6 +46,14 @@ namespace EzPasswordValidator.Tests
         }
 
         [TestMethod]
+        public void WhenPasswordIsEmptyThenPasswordIsNotValid()
+        {
+            const string invalidPsw = "             ";
+
+            Assert.IsFalse(_check.Execute(invalidPsw));
+        }
+
+        [TestMethod]
         public void WhenPasswordIsExactlyRequiredLengthThenPasswordIsValid()
         {
             const string validPsw = "12345678";

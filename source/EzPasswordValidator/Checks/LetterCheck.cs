@@ -31,7 +31,6 @@ namespace EzPasswordValidator.Checks
                     return true;
                 }
             }
-
             return false;
         }
     }

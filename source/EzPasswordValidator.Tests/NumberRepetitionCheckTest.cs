@@ -25,7 +25,7 @@ namespace EzPasswordValidator.Tests
 
         [DataRow("test22")]
         [DataRow("te22st")]
-        [DataRow("22test")]
+        [DataRow("224test")]
         [DataTestMethod]
         public void WhenPasswordContainsTheSameDigitTwoTimesInARowThenPasswordIsValid(string psw) =>
             Assert.IsTrue(_check.Execute(psw));
@@ -33,6 +33,7 @@ namespace EzPasswordValidator.Tests
         [DataRow("test222")]
         [DataRow("te222st")]
         [DataRow("222test")]
+        [DataRow("37222test")]
         [DataTestMethod]
         public void WhenPasswordContainsTheSameDigitThreeTimesInARowThenPasswordIsInvalid(string psw) =>
             Assert.IsFalse(_check.Execute(psw));
