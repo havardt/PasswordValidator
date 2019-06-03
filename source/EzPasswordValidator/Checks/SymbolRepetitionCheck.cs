@@ -25,36 +25,7 @@ namespace EzPasswordValidator.Checks
         /// <returns>
         ///   <c>true</c> if the password does NOT contain symbol repetition; <c>false</c> otherwise.
         /// </returns>
-        protected override bool OnExecute(string password)
-        {
-            const char baseSymbol = (char) 0;
-            char previousPrevious = baseSymbol;
-            char previous = baseSymbol;
-            foreach (char c in password)
-            {
-                if (SymbolCheck.SymbolsHashSet.Contains(c))
-                {
-                    if (previousPrevious == baseSymbol || previousPrevious != c)
-                    {
-                        previousPrevious = c;
-                    }else if (previous == baseSymbol || previous != c)
-                    {
-                        previous = c;
-                    }
-                    else
-                    {
-                        if (previousPrevious == previous && previous == c)
-                        {
-                            return false;
-                        }
-                    }
-                    continue;
-                }
-
-                previousPrevious = baseSymbol;
-                previous = baseSymbol;
-            }
-            return true;
-        }
+        protected override bool OnExecute(string password) => 
+            CheckHelper.RepetitionCheck(c => SymbolCheck.SymbolsHashSet.Contains(c), password);
     }
 }

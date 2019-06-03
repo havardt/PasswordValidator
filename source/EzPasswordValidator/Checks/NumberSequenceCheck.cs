@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
 
 namespace EzPasswordValidator.Checks
 {
@@ -9,6 +9,12 @@ namespace EzPasswordValidator.Checks
     /// <seealso cref="EzPasswordValidator.Checks.Check" />
     public sealed class NumberSequenceCheck : Check
     {
+        public static string[] Sequences =
+        {
+            "012", "123", "234", "345", "456", "567", "678", "789",
+            "987", "876", "765", "654", "543", "432", "321", "210"
+        };
+
         /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberSequenceCheck" /> class.
@@ -25,7 +31,6 @@ namespace EzPasswordValidator.Checks
         /// <returns>
         ///   <c>true</c> if the check is passed and NO number sequence is found; <c>false</c> otherwise.
         /// </returns>
-        protected override bool OnExecute(string password) =>
-            !Regex.IsMatch(password, @"^.*(012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210)+.*$");
+        protected override bool OnExecute(string password) => Sequences.All(s => !password.Contains(s));
     }
 }

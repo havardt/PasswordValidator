@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
+﻿
 namespace EzPasswordValidator.Checks
 {
     /// <inheritdoc />
@@ -26,37 +25,7 @@ namespace EzPasswordValidator.Checks
         /// <returns>
         ///   <c>true</c> if the password does NOT contain letter repetition; <c>false</c> otherwise.
         /// </returns>
-        protected override bool OnExecute(string password)
-        {
-            const char baseChar = (char)0;
-            char previousPrevious = baseChar;
-            char previous = baseChar;
-            foreach (char c in password)
-            {
-                if (char.IsLetter(c))
-                {
-                    if (previousPrevious == baseChar || previousPrevious != c)
-                    {
-                        previousPrevious = c;
-                    }
-                    else if (previous == baseChar || previous != c)
-                    {
-                        previous = c;
-                    }
-                    else
-                    {
-                        if (previousPrevious == previous && previous == c)
-                        {
-                            return false;
-                        }
-                    }
-                    continue;
-                }
-
-                previousPrevious = baseChar;
-                previous = baseChar;
-            }
-            return true;
-        }
+        protected override bool OnExecute(string password) =>
+            CheckHelper.RepetitionCheck(char.IsLetter, password);
     }
 }

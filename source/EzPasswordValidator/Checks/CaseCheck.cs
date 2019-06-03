@@ -1,5 +1,4 @@
-﻿using System.Linq;
-
+﻿
 namespace EzPasswordValidator.Checks
 {
     /// <inheritdoc />
@@ -21,8 +20,31 @@ namespace EzPasswordValidator.Checks
         /// <summary>
         /// Checks that the password contains at least one upper- and lower-case letter.
         /// </summary>
-        protected override bool OnExecute(string password) =>
-            password.Any(char.IsUpper) && password.Any(char.IsLower);
-
+        protected override bool OnExecute(string password)
+        {
+            var hasUpper = false;
+            var hasLower = false;
+            foreach (char c in password)
+            {
+                if (char.IsUpper(c))
+                {
+                    hasUpper = true;
+                    if (hasLower)
+                    {
+                        return true;
+                    }
+                    continue;//No point checking if lower if the char is already an upper case char.
+                }
+                if (char.IsLower(c))
+                {
+                    hasLower = true;
+                    if (hasUpper)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

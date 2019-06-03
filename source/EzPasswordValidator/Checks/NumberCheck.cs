@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
+﻿
 namespace EzPasswordValidator.Checks
 {
     /// <inheritdoc />
@@ -21,7 +20,17 @@ namespace EzPasswordValidator.Checks
         /// <summary>
         /// Checks that the password contains at least one number.
         /// </summary>
-        protected override bool OnExecute(string password) =>
-            Regex.IsMatch(password, "^.*[0-9]+.*$");
+        protected override bool OnExecute(string password)
+        {
+            foreach (char c in password)
+            {
+                if (char.IsDigit(c))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

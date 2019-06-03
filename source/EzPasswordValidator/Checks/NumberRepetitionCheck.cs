@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
+﻿
 namespace EzPasswordValidator.Checks
 {
     /// <inheritdoc />
@@ -25,6 +24,6 @@ namespace EzPasswordValidator.Checks
         ///   <c>true</c> if the check is passed and NO number repetition is found; <c>false</c> otherwise.
         /// </returns>
         protected override bool OnExecute(string password) => 
-            !Regex.IsMatch(password, @"^.*([0-9])\1{2}.*$");
+            CheckHelper.RepetitionCheck(char.IsDigit, password);
     }
 }
