@@ -1,12 +1,13 @@
 # EzPasswordValidator      
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)   
---
+[![NuGet version (EzPasswordValidator)](https://img.shields.io/nuget/v/EzPasswordValidator.svg)](https://www.nuget.org/packages/EzPasswordValidator/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)    
 
 A .NET standard library for easy password validation.
 This library defines 11 predefined checks and an easy way to implement custom checks.     
 
 ## :scroll: Table of contents :scroll:
 * [Predefined checks](#Checks)
+* [Install](#Install)
 * [Usage](#Usage)
 * [How to contribute](#Contribute)
 * [License info](#License)
@@ -49,11 +50,14 @@ The check is not case sensitive meaning 'aAA' and 'aaa' will both match.
 ##### Check for symbol repetition
 Checks for immediate symbol repetition 3 or longer in sequence.
 
+## Install
+There are three main ways to install EzPasswordValidator:
+1. [NuGet](https://www.nuget.org/packages/EzPasswordValidator/)
+2. Download .dll from [releases](https://github.com/havardt/EzPasswordValidator/releases)
+3. Manually build .dll from source
+
+
 ## Usage
-1. Download the .dll file. (See releases)
-2. Add the .dll file into your project.
-   In Visual Studio go to: <i>Solution explorer > Dependencies > Add reference > browse </i> and select the .dll file.<br/>
-3. Code
 
 Example validator with predefined basic checks.
 ```C#
