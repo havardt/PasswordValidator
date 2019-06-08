@@ -17,7 +17,7 @@ namespace EzPasswordValidator.Validators
     /// bool isValid = validator.Validate(password);
     /// if (isValid)
     /// {
-    ///     //Do something..
+    ///     
     /// }
     /// else
     /// {
@@ -33,25 +33,12 @@ namespace EzPasswordValidator.Validators
     {
         private readonly Dictionary<CheckTypes, Check> _predefinedChecks = new Dictionary<CheckTypes, Check>();
         private readonly Dictionary<string, Check> _customChecks = new Dictionary<string, Check>();
-        private uint _requiredLength;
+        private uint _minLength;
+        private uint _maxLength;
 
         /// <inheritdoc />
         public PasswordValidator() 
-            : this(CheckTypes.None, LengthCheck.DefaultLength)
-        {
-            
-        }
-
-        /// <inheritdoc />
-        public PasswordValidator(CheckTypes checkTypes) 
-            : this(checkTypes, LengthCheck.DefaultLength)
-        {
-            
-        }
-
-        /// <inheritdoc />
-        public PasswordValidator(uint requiredLength)
-            : this(Checks.CheckTypes.None, requiredLength)
+            : this(CheckTypes.None)
         {
             
         }
@@ -60,10 +47,8 @@ namespace EzPasswordValidator.Validators
         /// Initializes a new instance of the <see cref="PasswordValidator"/> class.
         /// </summary>
         /// <param name="checkTypes">Initial check types.</param>
-        /// <param name="requiredLength">The minimum required length of the password.</param>
-        public PasswordValidator(CheckTypes checkTypes, uint requiredLength)
+        public PasswordValidator(CheckTypes checkTypes) 
         {
-            _requiredLength = requiredLength;
             AddCheck(checkTypes);
         }
 
@@ -76,22 +61,46 @@ namespace EzPasswordValidator.Validators
         public CheckTypes CheckTypes { get; private set; }
 
         /// <summary>
-        /// Gets or sets the minimum required length of the password.
+        /// Gets or sets the minimum required length of the password,
+        /// <see cref="LengthCheck.DefaultMinLength"/> for the default length.
         /// </summary>
         /// <value>
         /// A <see cref="UInt32"/> positive number.
         /// </value>
-        public uint RequiredLength
+        public uint MinLength
         {
-            get => _requiredLength;
+            get => _minLength;
             set
             {
-                _requiredLength = value;
+                _minLength = value;
                 if (_predefinedChecks.TryGetValue(CheckTypes.Length, out Check check))
                 {
                     if (check is LengthCheck lengthCheck)
                     {
-                        lengthCheck.RequiredLength = value;
+                        lengthCheck.MinLength = value;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum allowed length of the password,
+        /// <see cref="LengthCheck.DefaultMaxLength"/> for the default length.
+        /// </summary>
+        /// <value>
+        /// A <see cref="UInt32"/> positive number.
+        /// </value>
+        public uint MaxLength
+        {
+            get => _maxLength;
+            set
+            {
+                _maxLength = value;
+                if (_predefinedChecks.TryGetValue(CheckTypes.Length, out Check check))
+                {
+                    if (check is LengthCheck lengthCheck)
+                    {
+                        lengthCheck.MaxLength = value;
                     }
                 }
             }
@@ -239,6 +248,24 @@ namespace EzPasswordValidator.Validators
         }
 
         /// <summary>
+        /// Sets the upper and lower password length bounds.
+        /// If a length check exists its properties are updated with the new bounds.
+        /// </summary>
+        /// <param name="minLength">The minimum required password length.</param>
+        /// <param name="maxLength">The maximum allowed password length.</param>
+        public void SetLengthBounds(uint minLength, uint maxLength)
+        {
+            _minLength = minLength;
+            _maxLength = maxLength;
+
+            if (!_predefinedChecks.TryGetValue(CheckTypes.Length, out Check check)) return;
+            if (!(check is LengthCheck lengthCheck)) return;
+
+            lengthCheck.MinLength = _minLength;
+            lengthCheck.MaxLength = _maxLength;
+        }
+
+        /// <summary>
         /// Creates and adds a check for each active check type.
         /// </summary>
         /// <param name="checkTypes">The check types.</param>
@@ -248,7 +275,7 @@ namespace EzPasswordValidator.Validators
             {
                 if (!_predefinedChecks.ContainsKey(check))
                 {
-                    _predefinedChecks.Add(check, CheckFactory.Create(check, _requiredLength));
+                    _predefinedChecks.Add(check, CheckFactory.Create(check, _minLength, _maxLength));
                 }
             }
         }

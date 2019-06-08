@@ -8,43 +8,48 @@
     public sealed class LengthCheck : Check
     {
         /// <summary>
-        /// The default required length of the password.
+        /// The default minimum length of the password.
         /// </summary>
-        public const uint DefaultLength = 8;
+        public const uint DefaultMinLength = 8;
+
+        /// <summary>
+        /// The default maximum length of the password.
+        /// </summary>
+        public const uint DefaultMaxLength = 128;
 
         /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="EzPasswordValidator.Checks.LengthCheck" /> class.
         /// </summary>
-        public LengthCheck() 
+        /// <param name="minLen">The minimum required length of the password.</param>
+        /// <param name="maxLen">The maximum allowed length of the password.</param>
+        public LengthCheck(uint minLen = DefaultMinLength, uint maxLen = DefaultMaxLength) 
             : base(CheckTypes.Length)
         {
-            RequiredLength = DefaultLength;
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EzPasswordValidator.Checks.LengthCheck" /> class.
-        /// </summary>
-        /// <param name="requiredLength">The required minimum length of the password.</param>
-        public LengthCheck(uint requiredLength)
-            : base(CheckTypes.Length)
-        {
-            RequiredLength = requiredLength;
+            MinLength = minLen;
+            MaxLength = maxLen;
         }
 
         /// <summary>
         /// Gets or sets the minimum required length of the password.
         /// </summary>
-        public uint RequiredLength { get; set; }
+        public uint MinLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum allowed length of the password.
+        /// </summary>
+        public uint MaxLength { get; set; }
 
         /// <inheritdoc />
         /// <summary>
-        /// Checks if the given password is equal to or longer than the required minimum length.
+        /// Checks if the given password is equal to or longer than the required minimum length
+        /// and equal to or shorter than the maximum length.
         /// The password is trimmed (trailing and leading white space is removed) before checking length.
         /// <c>null</c> is always invalid.
         /// </summary>
         protected override bool OnExecute(string password) =>
-            password != null && password.Trim().Length >= RequiredLength;
+            password != null && 
+            password.Trim().Length >= MinLength &&
+            password.Trim().Length <= MaxLength;
     }
 }
