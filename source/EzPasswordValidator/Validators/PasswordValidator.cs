@@ -23,7 +23,7 @@ namespace EzPasswordValidator.Validators
     /// {
     ///     foreach (Check failedCheck in validator.FailedChecks)
     ///     {
-    ///         //Inform user?
+    ///         
     ///     }
     /// }
     /// </code>
@@ -121,11 +121,13 @@ namespace EzPasswordValidator.Validators
         /// </summary>
         /// <param name="password">The password to check.</param>
         /// <returns>
-        ///   <c>true</c> if the password passes all checks; <c>false</c> otherwise.
+        ///   <c>true</c> if the password passes all checks; if no checks have been added
+        ///   then password is considered valid and <c>true</c> will be returned.
+        ///   If a check fails the password is invalid and <c>false</c> is returned.
         /// </returns>
         public bool Validate(string password)
         {
-            bool result = CheckTypes > CheckTypes.None;
+            var result = true;
             foreach (Check check in AllChecks)
             {
                 if (check.Execute(password) == false)
@@ -183,7 +185,7 @@ namespace EzPasswordValidator.Validators
         }
 
         /// <summary>
-        /// Adds the custom check.
+        /// Adds the custom check if a check with the given tag does not already exist.
         /// </summary>
         /// <param name="tag">
         ///   Unique string identifier.
