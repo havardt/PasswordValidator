@@ -12,11 +12,12 @@ namespace EzPasswordValidator.Checks
         /// Creates the a check for the specified check type.
         /// </summary>
         /// <param name="checkType">Type of check to generate.</param>
-        /// <param name="requiredLength">The minimum required length of the password.</param>
+        /// <param name="minLength">The minimum required length of the password.</param>
+        /// <param name="maxLength">The maximum allowed length of the password.</param>
         /// <returns>An instance of a <see cref="Check"/> object representing the given check type.</returns>
         /// <exception cref="InvalidEnumArgumentException">The check must only contain a single flag.</exception>
         /// <exception cref="ArgumentOutOfRangeException">No check found for the given argument.</exception>
-        public static Check Create(CheckTypes checkType, uint requiredLength)
+        public static Check Create(CheckTypes checkType, uint minLength, uint maxLength)
         {
             if (!checkType.IsSingleFlag())
             {
@@ -25,7 +26,7 @@ namespace EzPasswordValidator.Checks
             switch (checkType)
             {
                 case CheckTypes.Length:
-                    return new LengthCheck(requiredLength);
+                    return new LengthCheck(minLength, maxLength);
                 case CheckTypes.Numbers:
                     return new NumberCheck();
                 case CheckTypes.Letters:

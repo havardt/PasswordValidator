@@ -77,15 +77,18 @@ namespace EzPasswordValidator.Tests
 
             var checkBefore = (LengthCheck) _validator.AllChecks.FirstOrDefault(_ => _.Type == CheckTypes.Length);
             Debug.Assert(checkBefore != null, nameof(checkBefore) + " != null");
-            uint lengthBefore = checkBefore.RequiredLength;
+            uint minLenBefore = checkBefore.MinLength;
+            uint maxLenBefore = checkBefore.MaxLength;
 
-            _validator.RequiredLength = lengthBefore + 1;
+            _validator.SetLengthBounds(minLenBefore + 1, maxLenBefore + 1);
 
             var checkAfter = (LengthCheck)_validator.AllChecks.FirstOrDefault(_ => _.Type == CheckTypes.Length);
             Debug.Assert(checkAfter != null, nameof(checkAfter) + " != null");
-            uint lengthAfter = checkAfter.RequiredLength;
+            uint minLenAfter = checkBefore.MinLength;
+            uint maxLenAfter = checkBefore.MaxLength;
 
-            Assert.AreNotEqual(lengthBefore, lengthAfter);
+            Assert.AreNotEqual(minLenBefore, minLenAfter);
+            Assert.AreNotEqual(maxLenBefore, maxLenAfter);
         }
     }
 }
