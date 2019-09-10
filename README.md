@@ -1,5 +1,6 @@
 # EzPasswordValidator      
 [![NuGet version (EzPasswordValidator)](https://img.shields.io/nuget/v/EzPasswordValidator.svg)](https://www.nuget.org/packages/EzPasswordValidator/)
+[![Downloads](https://img.shields.io/nuget/dt/EzPasswordValidator)](https://www.nuget.org/packages/EzPasswordValidator/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)    
 
 A .NET standard library for easy password validation.
