@@ -90,9 +90,9 @@ Example symbol repetiton: ///  |  @@@
 
 ## Install
 There are three main ways to install EzPasswordValidator:
-1. [NuGet](https://www.nuget.org/packages/EzPasswordValidator/)
-2. Download .dll from [releases](https://github.com/havardt/EzPasswordValidator/releases)
-3. Manually build .dll from source
+- [NuGet](https://www.nuget.org/packages/EzPasswordValidator/) (Recommended)
+- Download .dll from [releases](https://github.com/havardt/EzPasswordValidator/releases)
+- Manually build .dll from source
 
 
 ## Usage
