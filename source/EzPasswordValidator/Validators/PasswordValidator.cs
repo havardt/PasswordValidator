@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;  
+using System.Threading.Tasks;
 using EzPasswordValidator.Checks;
 
 namespace EzPasswordValidator.Validators
@@ -33,21 +33,21 @@ namespace EzPasswordValidator.Validators
     {
         private readonly Dictionary<CheckTypes, Check> _predefinedChecks = new Dictionary<CheckTypes, Check>();
         private readonly Dictionary<string, Check> _customChecks = new Dictionary<string, Check>();
-        private uint _minLength;
-        private uint _maxLength;
+        private uint _minLength = LengthCheck.DefaultMinLength;
+        private uint _maxLength = LengthCheck.DefaultMaxLength;
 
         /// <inheritdoc />
-        public PasswordValidator() 
+        public PasswordValidator()
             : this(CheckTypes.None)
         {
-            
+
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PasswordValidator"/> class.
         /// </summary>
         /// <param name="checkTypes">Initial check types.</param>
-        public PasswordValidator(CheckTypes checkTypes) 
+        public PasswordValidator(CheckTypes checkTypes)
         {
             AddCheck(checkTypes);
         }
@@ -146,8 +146,8 @@ namespace EzPasswordValidator.Validators
             }
             return result;
         }
-		
-		/// <summary>
+
+        /// <summary>
         /// Validates the specified password asynchronous. This method should be used
         /// when custom checks include long running operations.
         /// </summary>
@@ -171,7 +171,7 @@ namespace EzPasswordValidator.Validators
         /// <exception cref="ArgumentOutOfRangeException">The given value does not represent any <see cref="CheckTypes"/>.</exception>
         public void AddCheck(CheckTypes checkTypes)
         {
-            if(!checkTypes.IsInRange())
+            if (!checkTypes.IsInRange())
             {
                 throw new ArgumentOutOfRangeException($"No checks within the given value: {checkTypes}");
             }
@@ -225,7 +225,7 @@ namespace EzPasswordValidator.Validators
         /// </summary>
         /// <param name="checkTypes">An <see cref="Int32"/> value representing check types.</param>
         /// <exception cref="ArgumentOutOfRangeException">The given value does not represent any <see cref="CheckTypes"/>.</exception>
-        public void RemoveCheck(int checkTypes) => RemoveCheck((CheckTypes) checkTypes);
+        public void RemoveCheck(int checkTypes) => RemoveCheck((CheckTypes)checkTypes);
 
         /// <summary>
         /// Removes the custom check.
@@ -294,6 +294,6 @@ namespace EzPasswordValidator.Validators
                 }
             }
         }
-       
+
     }
 }
