@@ -1,4 +1,5 @@
 ﻿using EzPasswordValidator.Checks;
+using EzPasswordValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EzPasswordValidator.Tests
@@ -67,6 +68,20 @@ namespace EzPasswordValidator.Tests
             const string validPsw = "123456789123456789";
 
             Assert.IsTrue(_check.Execute(validPsw));
+        }
+
+        [TestMethod]
+        public void WhenUsingBasicCheckDefaultLengthsShouldApply()
+        {
+            const string validPsw = "abc123XYZ/";
+            const string invalidPsw = "Ab123/"; // Fits all criteria except minimum length.
+
+            var validator = new PasswordValidator(CheckTypes.Basic);
+
+            Assert.AreEqual(LengthCheck.DefaultMinLength, validator.MinLength);
+            Assert.AreEqual(LengthCheck.DefaultMaxLength, validator.MaxLength);
+            Assert.IsTrue(validator.Validate(validPsw));
+            Assert.IsFalse(validator.Validate(invalidPsw));
         }
     }
 }
