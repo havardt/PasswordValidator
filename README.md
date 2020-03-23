@@ -1,3 +1,5 @@
+>  :warning: Deprecated  :warning:   
+> This package is no longer maintained. Bugs will not be fixed. Use with caution.
 # EzPasswordValidator      
 [![NuGet version (EzPasswordValidator)](https://img.shields.io/nuget/v/EzPasswordValidator.svg)](https://www.nuget.org/packages/EzPasswordValidator/)
 [![Downloads](https://img.shields.io/nuget/dt/EzPasswordValidator)](https://www.nuget.org/packages/EzPasswordValidator/)
