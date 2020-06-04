@@ -33,7 +33,7 @@ namespace EzPasswordValidator.Checks
         /// <list type="bullet">
         ///    <item><description>All basic checks <see cref="Basic"/></description></item>
         ///    <item><description>Checks for a number sequence <see cref="NumberSequence"/></description></item>
-        ///    <item><description>Checks for number repetition <see cref="NumberRepetition"/></description></item>
+        ///    <item><description>Checks for number repetition <see cref="DigitRepetition"/></description></item>
         ///    <item><description>Checks if numbers are mixed <see cref="NumberMixed"/></description></item>
         ///    <item><description>Checks for letter sequence <see cref="LetterSequence"/></description></item>
         ///    <item><description>Checks for letter repetition <see cref="LetterRepetition"/></description></item>
@@ -74,8 +74,8 @@ namespace EzPasswordValidator.Checks
         /// <summary>
         /// Represents a check for number repetition.
         /// </summary>
-        /// <seealso cref="NumberRepetitionCheck"/>
-        NumberRepetition = 0b0000000000000000000000001000000,
+        /// <seealso cref="DigitRepetitionCheck"/>
+        DigitRepetition = 0b0000000000000000000000001000000,
         /// <summary>
         /// Represents a check for digits in other positions than the start/end.
         /// </summary>

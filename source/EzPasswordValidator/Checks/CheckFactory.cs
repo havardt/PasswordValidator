@@ -17,6 +17,7 @@ namespace EzPasswordValidator.Checks
         /// <param name="letterSequenceLength">The sequence length at which the <see cref="LetterSequenceCheck"/> fails.</param>
         /// <param name="letterRepetitionLength">The amount of letter repetitions that result in a failed <see cref="LetterRepetitionCheck"/> check.</param>
         /// <param name="symbolRepetitionLength">The amount of symbol repetitions that result in a failed <see cref="SymbolRepetitionCheck"/> check.</param>
+        /// <param name="digitRepetitionLength">The amount of digit repetitions that result in a failed <see cref="DigitRepetitionCheck"/> check.</param>
         /// <returns>An instance of a <see cref="Check"/> object representing the given check type.</returns>
         /// <exception cref="InvalidEnumArgumentException">The check must only contain a single flag.</exception>
         /// <exception cref="ArgumentOutOfRangeException">No check found for the given argument.</exception>
@@ -26,7 +27,8 @@ namespace EzPasswordValidator.Checks
             uint maxLength,
             int letterSequenceLength,
             int letterRepetitionLength,
-            int symbolRepetitionLength)
+            int symbolRepetitionLength,
+            int digitRepetitionLength)
         {
             if (!checkType.IsSingleFlag())
             {
@@ -46,8 +48,8 @@ namespace EzPasswordValidator.Checks
                     return new CaseCheck();
                 case CheckTypes.NumberSequence:
                     return new NumberSequenceCheck();
-                case CheckTypes.NumberRepetition:
-                    return new NumberRepetitionCheck();
+                case CheckTypes.DigitRepetition:
+                    return new DigitRepetitionCheck(digitRepetitionLength);
                 case CheckTypes.NumberMixed:
                     return new NumberPositionCheck();
                 case CheckTypes.LetterSequence:

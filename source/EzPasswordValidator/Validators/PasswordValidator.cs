@@ -38,6 +38,7 @@ namespace EzPasswordValidator.Validators
         private int _letterSequenceLength = LetterSequenceCheck.DefaultSequenceLength;
         private int _letterRepetitionLength = LetterRepetitionCheck.DefaultRepetitionLength;
         private int _symbolRepetitionLength = SymbolRepetitionCheck.DefaultRepetitionLength;
+        private int _digitRepetitionLength = DigitRepetitionCheck.DefaultRepetitionLength;
 
         /// <inheritdoc />
         public PasswordValidator()
@@ -195,6 +196,36 @@ namespace EzPasswordValidator.Validators
                     if (check is SymbolRepetitionCheck symbolRepetitionCheck)
                     {
                         symbolRepetitionCheck.RepetitionLength = value;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The amount of digits that must be repeated for
+        /// the <see cref="DigitRepetitionCheck"/> test to fail.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the set value is less than or equal to 1.
+        /// </exception>
+        public int DigitRepetitionLength
+        {
+            get => _digitRepetitionLength;
+            set
+            {
+                if (value <= 1)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(DigitRepetitionLength),
+                        "The digit repetition length cannot be less than or equal to 1.");
+                }
+
+                _digitRepetitionLength = value;
+                if (_predefinedChecks.TryGetValue(CheckTypes.DigitRepetition, out Check check))
+                {
+                    if (check is DigitRepetitionCheck digitRepetitionCheck)
+                    {
+                        digitRepetitionCheck.RepetitionLength = value;
                     }
                 }
             }
@@ -377,7 +408,8 @@ namespace EzPasswordValidator.Validators
                             _maxLength,
                             _letterSequenceLength,
                             _letterRepetitionLength,
-                            _symbolRepetitionLength)
+                            _symbolRepetitionLength,
+                            _digitRepetitionLength)
                     );
                 }
             }
