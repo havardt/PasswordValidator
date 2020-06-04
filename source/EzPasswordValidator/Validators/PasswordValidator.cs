@@ -35,6 +35,8 @@ namespace EzPasswordValidator.Validators
         private readonly Dictionary<string, Check> _customChecks = new Dictionary<string, Check>();
         private uint _minLength = LengthCheck.DefaultMinLength;
         private uint _maxLength = LengthCheck.DefaultMaxLength;
+        private int _letterSequenceLength = LetterSequenceCheck.DefaultSequenceLength;
+        private int _letterRepetitionLength = LetterRepetitionCheck.DefaultRepetitionLength;
 
         /// <inheritdoc />
         public PasswordValidator()
@@ -101,6 +103,36 @@ namespace EzPasswordValidator.Validators
                     if (check is LengthCheck lengthCheck)
                     {
                         lengthCheck.MaxLength = value;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The amount of characters that must be in a letter sequence for
+        /// the <see cref="LetterSequenceCheck"/> test to fail.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the set sequence length is less than or equal to 1.
+        /// </exception>
+        public int LetterSequenceLength
+        {
+            get => _letterSequenceLength;
+            set
+            {
+                if (value <= 1)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(LetterSequenceLength),
+                        "The sequence length cannot be less than or equal to 1.");
+                }
+
+                _letterSequenceLength = value;
+                if (_predefinedChecks.TryGetValue(CheckTypes.LetterSequence, out Check check))
+                {
+                    if (check is LetterSequenceCheck letterSequenceCheck)
+                    {
+                        letterSequenceCheck.SequenceLength = value;
                     }
                 }
             }
@@ -275,7 +307,7 @@ namespace EzPasswordValidator.Validators
             {
                 if (!_predefinedChecks.ContainsKey(check))
                 {
-                    _predefinedChecks.Add(check, CheckFactory.Create(check, _minLength, _maxLength));
+                    _predefinedChecks.Add(check, CheckFactory.Create(check, _minLength, _maxLength, _letterSequenceLength));
                 }
             }
         }

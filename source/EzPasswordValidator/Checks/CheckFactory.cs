@@ -14,10 +14,11 @@ namespace EzPasswordValidator.Checks
         /// <param name="checkType">Type of check to generate.</param>
         /// <param name="minLength">The minimum required length of the password.</param>
         /// <param name="maxLength">The maximum allowed length of the password.</param>
+        /// <param name="letterSequenceLength">The sequence length at which the <see cref="LetterSequenceCheck"/> fails.</param>
         /// <returns>An instance of a <see cref="Check"/> object representing the given check type.</returns>
         /// <exception cref="InvalidEnumArgumentException">The check must only contain a single flag.</exception>
         /// <exception cref="ArgumentOutOfRangeException">No check found for the given argument.</exception>
-        public static Check Create(CheckTypes checkType, uint minLength, uint maxLength)
+        public static Check Create(CheckTypes checkType, uint minLength, uint maxLength, int letterSequenceLength)
         {
             if (!checkType.IsSingleFlag())
             {
@@ -42,7 +43,7 @@ namespace EzPasswordValidator.Checks
                 case CheckTypes.NumberMixed:
                     return new NumberPositionCheck();
                 case CheckTypes.LetterSequence:
-                    return new LetterSequenceCheck();
+                    return new LetterSequenceCheck(letterSequenceLength);
                 case CheckTypes.LetterRepetition:
                     return new LetterRepetitionCheck();
                 case CheckTypes.SymbolRepetition:
