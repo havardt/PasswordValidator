@@ -37,6 +37,7 @@ namespace EzPasswordValidator.Validators
         private uint _maxLength = LengthCheck.DefaultMaxLength;
         private int _letterSequenceLength = LetterSequenceCheck.DefaultSequenceLength;
         private int _letterRepetitionLength = LetterRepetitionCheck.DefaultRepetitionLength;
+        private int _symbolRepetitionLength = SymbolRepetitionCheck.DefaultRepetitionLength;
 
         /// <inheritdoc />
         public PasswordValidator()
@@ -163,6 +164,37 @@ namespace EzPasswordValidator.Validators
                     if (check is LetterRepetitionCheck letterRepetitionCheck)
                     {
                         letterRepetitionCheck.RepetitionLength = value;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// The amount of symbols that must be repeated for
+        /// the <see cref="SymbolRepetitionCheck"/> test to fail.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the set value is less than or equal to 1.
+        /// </exception>
+        public int SymbolRepetitionLength
+        {
+            get => _symbolRepetitionLength;
+            set
+            {
+                if (value <= 1)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(SymbolRepetitionLength),
+                        "The symbol repetition length cannot be less than or equal to 1.");
+                }
+
+                _symbolRepetitionLength = value;
+                if (_predefinedChecks.TryGetValue(CheckTypes.SymbolRepetition, out Check check))
+                {
+                    if (check is SymbolRepetitionCheck symbolRepetitionCheck)
+                    {
+                        symbolRepetitionCheck.RepetitionLength = value;
                     }
                 }
             }
@@ -337,7 +369,16 @@ namespace EzPasswordValidator.Validators
             {
                 if (!_predefinedChecks.ContainsKey(check))
                 {
-                    _predefinedChecks.Add(check, CheckFactory.Create(check, _minLength, _maxLength, _letterSequenceLength));
+                    _predefinedChecks.Add(
+                        check,
+                        CheckFactory.Create(
+                            check,
+                            _minLength,
+                            _maxLength,
+                            _letterSequenceLength,
+                            _letterRepetitionLength,
+                            _symbolRepetitionLength)
+                    );
                 }
             }
         }

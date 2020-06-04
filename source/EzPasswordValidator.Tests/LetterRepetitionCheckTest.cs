@@ -78,5 +78,13 @@ namespace EzPasswordValidator.Tests
             const string pswWithThreeRepetitions = "testGGG";
             Assert.IsTrue(_validator.Validate(pswWithThreeRepetitions));
         }
+
+        [TestMethod]
+        public void PasswordWithFourRepetitionsAreValidWhenSettingRepetitionLengthToFive()
+        {
+            const string pswWithFourRepetitions = "testGGGG";
+            _validator.LetterRepetitionLength = 5;
+            Assert.IsTrue(_validator.Validate(pswWithFourRepetitions));
+        }
     }
 }
