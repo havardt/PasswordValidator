@@ -15,10 +15,16 @@ namespace EzPasswordValidator.Checks
         /// <param name="minLength">The minimum required length of the password.</param>
         /// <param name="maxLength">The maximum allowed length of the password.</param>
         /// <param name="letterSequenceLength">The sequence length at which the <see cref="LetterSequenceCheck"/> fails.</param>
+        /// <param name="letterRepetitionLength">The amount of letter repetitions that result in a failed <see cref="LetterRepetitionCheck"/> check.</param>
         /// <returns>An instance of a <see cref="Check"/> object representing the given check type.</returns>
         /// <exception cref="InvalidEnumArgumentException">The check must only contain a single flag.</exception>
         /// <exception cref="ArgumentOutOfRangeException">No check found for the given argument.</exception>
-        public static Check Create(CheckTypes checkType, uint minLength, uint maxLength, int letterSequenceLength)
+        public static Check Create(
+            CheckTypes checkType,
+            uint minLength,
+            uint maxLength,
+            int letterSequenceLength,
+            int letterRepetitionLength)
         {
             if (!checkType.IsSingleFlag())
             {
@@ -45,7 +51,7 @@ namespace EzPasswordValidator.Checks
                 case CheckTypes.LetterSequence:
                     return new LetterSequenceCheck(letterSequenceLength);
                 case CheckTypes.LetterRepetition:
-                    return new LetterRepetitionCheck();
+                    return new LetterRepetitionCheck(letterRepetitionLength);
                 case CheckTypes.SymbolRepetition:
                     return new SymbolRepetitionCheck();
                 default:

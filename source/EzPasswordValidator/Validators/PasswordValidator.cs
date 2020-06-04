@@ -139,6 +139,36 @@ namespace EzPasswordValidator.Validators
         }
 
         /// <summary>
+        /// The amount of characters that must be repeated for
+        /// the <see cref="LetterRepetitionCheck"/> test to fail.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the set value is less than or equal to 1.
+        /// </exception>
+        public int LetterRepetitionLength
+        {
+            get => _letterRepetitionLength;
+            set
+            {
+                if (value <= 1)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(LetterRepetitionLength),
+                        "The letter repetition length cannot be less than or equal to 1.");
+                }
+
+                _letterRepetitionLength = value;
+                if (_predefinedChecks.TryGetValue(CheckTypes.LetterRepetition, out Check check))
+                {
+                    if (check is LetterRepetitionCheck letterRepetitionCheck)
+                    {
+                        letterRepetitionCheck.RepetitionLength = value;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets all checks; predefined and custom.
         /// </summary>
         /// <returns>An <see cref="System.Collections.Generic.IEnumerable{T}" /> that contains all checks.</returns>
