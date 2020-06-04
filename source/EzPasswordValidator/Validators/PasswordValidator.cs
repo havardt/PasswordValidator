@@ -39,6 +39,7 @@ namespace EzPasswordValidator.Validators
         private int _letterRepetitionLength = LetterRepetitionCheck.DefaultRepetitionLength;
         private int _symbolRepetitionLength = SymbolRepetitionCheck.DefaultRepetitionLength;
         private int _digitRepetitionLength = DigitRepetitionCheck.DefaultRepetitionLength;
+        private int _numberSequenceLength = NumberSequenceCheck.DefaultSequenceLength;
 
         /// <inheritdoc />
         public PasswordValidator()
@@ -105,6 +106,38 @@ namespace EzPasswordValidator.Validators
                     if (check is LengthCheck lengthCheck)
                     {
                         lengthCheck.MaxLength = value;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The amount of digits that must be in a number sequence for
+        /// the <see cref="NumberSequenceCheck"/> test to fail.
+        /// Eg. if set to 5, then a password containing a number sequence like '12345'
+        /// fails validation (if the check is active).
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if the set sequence length is less than or equal to 1.
+        /// </exception>
+        public int NumberSequenceLength
+        {
+            get => _numberSequenceLength;
+            set
+            {
+                if (value <= 1)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(NumberSequenceLength),
+                        "The sequence length cannot be less than or equal to 1.");
+                }
+
+                _numberSequenceLength = value;
+                if (_predefinedChecks.TryGetValue(CheckTypes.NumberSequence, out Check check))
+                {
+                    if (check is NumberSequenceCheck numberSequenceCheck)
+                    {
+                        numberSequenceCheck.SequenceLength = value;
                     }
                 }
             }
@@ -409,7 +442,8 @@ namespace EzPasswordValidator.Validators
                             _letterSequenceLength,
                             _letterRepetitionLength,
                             _symbolRepetitionLength,
-                            _digitRepetitionLength)
+                            _digitRepetitionLength,
+                            _numberSequenceLength)
                     );
                 }
             }

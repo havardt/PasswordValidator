@@ -67,12 +67,12 @@ namespace EzPasswordValidator.Checks
         /// <seealso cref="CaseCheck"/>
         CaseUpperLower = 0b0000000000000000000000000010000,
         /// <summary>
-        /// Represents a check for a number sequence 3.
+        /// Represents a check for a number sequence, such as '12345'.
         /// </summary>
         /// <seealso cref="NumberSequenceCheck"/>
         NumberSequence = 0b0000000000000000000000000100000,
         /// <summary>
-        /// Represents a check for number repetition.
+        /// Represents a check for digit repetition, such as '2222'.
         /// </summary>
         /// <seealso cref="DigitRepetitionCheck"/>
         DigitRepetition = 0b0000000000000000000000001000000,
@@ -82,17 +82,17 @@ namespace EzPasswordValidator.Checks
         /// <seealso cref="NumberPositionCheck"/>
         NumberMixed = 0b0000000000000000000000010000000,
         /// <summary>
-        /// Represents a check for a letter sequence.
+        /// Represents a check for a letter sequence, such as 'abcd'.
         /// </summary>
         /// <seealso cref="LetterSequenceCheck"/>
         LetterSequence = 0b0000000000000000000000100000000,
         /// <summary>
-        /// Represents a check for letter repetition.
+        /// Represents a check for letter repetition, such as 'aaaa'.
         /// </summary>
         /// <seealso cref="LetterRepetitionCheck"/>
         LetterRepetition = 0b0000000000000000000001000000000,
         /// <summary>
-        /// Represents a check for symbol repetition.
+        /// Represents a check for symbol repetition, such as ';;;;'.
         /// </summary>
         /// <seealso cref="SymbolRepetitionCheck"/>
         SymbolRepetition = 0b0000000000000000000010000000000,

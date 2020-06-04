@@ -1,4 +1,5 @@
 ﻿using EzPasswordValidator.Checks;
+using EzPasswordValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EzPasswordValidator.Tests
@@ -6,10 +7,16 @@ namespace EzPasswordValidator.Tests
     [TestClass]
     public class NumberSequenceCheckTest
     {
+        private PasswordValidator _validator;
         private NumberSequenceCheck _check;
 
         [TestInitialize]
-        public void Setup() => _check = new NumberSequenceCheck();
+        public void Setup()
+        {
+            _validator = new PasswordValidator();
+            _validator.AddCheck(CheckTypes.NumberSequence);
+            _check = new NumberSequenceCheck();
+        }
 
         [TestMethod]
         public void WhenPasswordContainsNoNumbersThenPasswordIsValid()
@@ -19,25 +26,49 @@ namespace EzPasswordValidator.Tests
             Assert.IsTrue(_check.Execute(psw));
         }
 
-        [DataRow("12test")]
-        [DataRow("te12st")]
-        [DataRow("test12")]
+        [DataRow("123test")]
+        [DataRow("te123st")]
+        [DataRow("test123")]
         [DataTestMethod]
-        public void WhenPasswordContainsATwoDigitNumberSequenceThenPasswordIsValid(string psw) => 
+        public void WhenPasswordContainsAThreeDigitNumberSequenceThenPasswordIsValid(string psw) => 
             Assert.IsTrue(_check.Execute(psw));
 
-        [DataRow("234test")]
-        [DataRow("te234st")]
-        [DataRow("test234")]
+        [DataRow("2345test")]
+        [DataRow("te2345st")]
+        [DataRow("test2345")]
         [DataTestMethod]
-        public void WhenPasswordContainsAThreeDigitNumberSequenceThenPasswordIsInvalid(string psw) =>
+        public void WhenPasswordContainsAFourDigitNumberSequenceThenPasswordIsInvalid(string psw) =>
             Assert.IsFalse(_check.Execute(psw));
 
-        [DataRow("654test")]
-        [DataRow("te654st")]
-        [DataRow("test654")]
+        [DataRow("6543test")]
+        [DataRow("te6543st")]
+        [DataRow("test6543")]
         [DataTestMethod]
-        public void WhenPasswordContainsAThreeDigitReverseNumberSequenceThenPasswordIsInvalid(string psw) =>
+        public void WhenPasswordContainsAFourDigitReverseNumberSequenceThenPasswordIsInvalid(string psw) =>
             Assert.IsFalse(_check.Execute(psw));
+
+        [TestMethod]
+        public void DefaultLengthIsFour() =>
+            Assert.IsTrue(_validator.NumberSequenceLength == 4);
+
+        [DataRow("6543test")]
+        [DataRow("te6543st")]
+        [DataRow("test1234")]
+        [DataRow("test")]
+        [DataTestMethod]
+        public void ChangingSequenceLengthToFiveAllowsSequencesOfLowerLength(string psw)
+        {
+            _validator.NumberSequenceLength = 5;
+            Assert.IsTrue(_validator.Validate(psw));
+        }
+
+        [DataRow("te98765st")]
+        [DataRow("test12345")]
+        [DataTestMethod]
+        public void ChangingSequenceLengthToFiveDisallowsSequencesOfLengthFive(string psw)
+        {
+            _validator.NumberSequenceLength = 5;
+            Assert.IsFalse(_validator.Validate(psw));
+        }
     }
 }
