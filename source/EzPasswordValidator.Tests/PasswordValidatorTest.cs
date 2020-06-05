@@ -90,5 +90,13 @@ namespace EzPasswordValidator.Tests
             Assert.AreNotEqual(minLenBefore, minLenAfter);
             Assert.AreNotEqual(maxLenBefore, maxLenAfter);
         }
+
+        [TestMethod]
+        public void WhenValidatingWith50PercentOnTwoChecksOnlyOneShouldBeRequired()
+        {
+            const string psw = "test";
+            _validator.AddCheck(CheckTypes.Letters | CheckTypes.Numbers);
+            Assert.IsTrue(_validator.Validate(psw, 0.5));
+        }
     }
 }

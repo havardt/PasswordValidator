@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using EzPasswordValidator.Checks;
@@ -305,6 +306,48 @@ namespace EzPasswordValidator.Validators
             return result;
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// Validates the specified password.
+        /// </summary>
+        /// <param name="password">The password to check.</param>
+        /// <param name="p">
+        ///   The % of checks that need to pass for the password to be valid.
+        ///   This is a value between 0 and 1. Eg. 0.5 means that 50% of the checks need to pass.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the password passes all checks; if no checks have been added
+        ///   then password is considered valid and <c>true</c> will be returned.
+        ///   If a check fails the password is invalid and <c>false</c> is returned.
+        /// </returns>
+        public bool Validate(string password, double p)
+        {
+            bool isValid = Validate(password);
+            if (isValid)
+            {
+                return true;
+            }
+            double pActual = (double)PassedChecks.Count() / AllChecks.Count();
+            return (pActual + double.Epsilon) >= p;
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Validates the specified password.
+        /// </summary>
+        /// <param name="password">The password to check.</param>
+        /// <param name="minPassedChecks">
+        ///   The minimum number of checks that need to pass for the password to be valid.
+        ///   Eg. a value of 3 means that at least 3 checks must pass.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the password passes at least the given minimum amount of checks;
+        ///   if no checks have been added, then the password is considered valid and <c>true</c>
+        ///   will be returned. If a check fails the password is invalid and <c>false</c> is returned.
+        /// </returns>
+        public bool Validate(string password, int minPassedChecks) => 
+            Validate(password) || PassedChecks.Count() >= minPassedChecks;
+
         /// <summary>
         /// Validates the specified password asynchronous. This method should be used
         /// when custom checks include long running operations.
@@ -313,7 +356,40 @@ namespace EzPasswordValidator.Validators
         /// <returns>
         ///   <c>true</c> if the password passes all checks; <c>false</c> otherwise.
         /// </returns>
-        public async Task<bool> ValidateAsync(string password) => await Task.Run(() => Validate(password));
+        public async Task<bool> ValidateAsync(string password) =>
+            await Task.Run(() => Validate(password));
+
+        /// <summary>
+        /// Validates the specified password.
+        /// </summary>
+        /// <param name="password">The password to check.</param>
+        /// <param name="p">
+        ///   The % of checks that need to pass for the password to be valid.
+        ///   This is a value between 0 and 1. Eg. 0.5 means that 50% of the checks need to pass.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the password passes all checks; if no checks have been added
+        ///   then password is considered valid and <c>true</c> will be returned.
+        ///   If a check fails the password is invalid and <c>false</c> is returned.
+        /// </returns>
+        public async Task<bool> ValidateAsync(string password, double p) =>
+            await Task.Run(() => Validate(password, p));
+
+        /// <summary>
+        /// Validates the specified password.
+        /// </summary>
+        /// <param name="password">The password to check.</param>
+        /// <param name="minPassedChecks">
+        ///   The minimum number of checks that need to pass for the password to be valid.
+        ///   Eg. a value of 3 means that at least 3 checks must pass.
+        /// </param>
+        /// <returns>
+        ///   <c>true</c> if the password passes all checks; if no checks have been added
+        ///   then password is considered valid and <c>true</c> will be returned.
+        ///   If a check fails the password is invalid and <c>false</c> is returned.
+        /// </returns>
+        public async Task<bool> ValidateAsync(string password, int minPassedChecks) =>
+            await Task.Run(() => Validate(password, minPassedChecks));
 
         /// <summary>
         /// Convenience method that adds the check types represented by the Int32 value.
