@@ -142,7 +142,15 @@ The ```Validate``` method runs through all the set checks and returns ```true```
 bool isValid = validator.Validate(password);
 ```
 
-<i>Failed checks</i> 
+<i>Partial criteria matching</i>     
+Partial criteria matching is a feature that allows a password to be validated even if only a subset of the checks pass. For example, if you add the check for letters, the check for numbers, and the check for upper and lower case, then you can pass a value of 2 to the validator indicating that the password is only required to pass two of these three checks. A password with letters and numbers, but no upper case is then still valid. You can also provide a value between 0 and 1 representing the % of checks that must pass.
+
+```C#
+bool isValid = validator.Validate(password, 2); // Two tests must pass for the password to be valid.
+bool isValid = validator.Validate(password, 0.5); // 50% of the tests must pass for the password to be valid.
+```
+
+<i>Failed checks</i>     
 One can iterate over the checks that failed by doing the following:
 ```C#
 foreach (Check failedCheck in validator.FailedChecks)
@@ -151,7 +159,7 @@ foreach (Check failedCheck in validator.FailedChecks)
 }
 ```
 
-<i>Passed checks</i>
+<i>Passed checks</i>     
 One can iterate over the checks that passed by doing the following:
 ```C#
 foreach (Check passedCheck in validator.PassedChecks)
