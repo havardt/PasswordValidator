@@ -49,7 +49,7 @@ namespace EzPasswordValidator.Checks
 
         /// <summary>
         ///   Checks if the given string contains character repetition of the
-        ///   given length or longer.
+        ///   given length or longer (NOT case sensitive).
         /// </summary>
         /// <param name="expr">The expression of which filters which characters to check for repetition.</param>
         /// <param name="str">The string to check.</param>
@@ -62,13 +62,14 @@ namespace EzPasswordValidator.Checks
         public static bool RepetitionCheck(Func<char, bool> expr, string str, int len)
         {
             int count = 1; // The current amount of repetitions.
-            int previousChar = 0;
+            int previousChar = char.ToLower(str[0]);
 
-            foreach (char c in str)
+            foreach (char c in str.Substring(1))
             {
                 if (expr.Invoke(c))
                 {
-                    if (previousChar == c)
+                    char currentChar = char.ToLower(c);
+                    if (previousChar == currentChar)
                     {
                         count++;
                         if (count == len)
@@ -78,7 +79,7 @@ namespace EzPasswordValidator.Checks
                     }
                     else
                     {
-                        previousChar = c;
+                        previousChar = currentChar;
                         count = 1;
                     }
                 }

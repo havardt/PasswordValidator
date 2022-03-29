@@ -29,7 +29,12 @@ namespace EzPasswordValidator.Tests
             Assert.IsTrue(_check.Execute(psw));
 
         /// <summary> This test assumes that the default repetition length is 4. </summary>
+        [DataRow("Aaaa@2022")]
+        [DataRow("aaaA@2022")]
         [DataRow("testAAAA")]
+        [DataRow("testAaaa")]
+        [DataRow("testaaaA")]
+        [DataRow("aAaatest")]
         [DataRow("teAAAAAst")]
         [DataRow("AAAAtesBBBt")]
         [DataRow("ØØØØtest")] //Non ISO basic latin test case
