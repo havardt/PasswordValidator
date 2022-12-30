@@ -1,3 +1,5 @@
+> **Warning**    
+> This package has been deprecated as it is no longer maintained.
 
 # PasswordValidator      
 [![NuGet version (EzPasswordValidator)](https://img.shields.io/nuget/v/EzPasswordValidator.svg)](https://www.nuget.org/packages/EzPasswordValidator/)
@@ -17,7 +19,7 @@ This library defines 11 predefined checks and an easy way to implement custom ch
 ## Checks
 There are 11 predfined checks each representing a password criteria. Each check type is defined as a bit flag. A combination of checks can thus be simply refrenced using a single integer. All predefined check types are defined [here.](source/EzPasswordValidator/Checks/CheckTypes.cs)
 
-> :point_up: :open_mouth: :mega: :exclamation:   
+> **Note**    
 > It is important to note that these checks don't necessarily mean that your users will create more secure passwords. In some cases using too many checks may also harm security by removing some of the key space. One should also note that one can have very secure passwords even without passing many of these checks. For example, a password of length 32 comprised of random letters can be secure even though it does not pass basic checks such as a check for numbers and symbols. This is because of the strength in length. When using checks such as the letter and number sequence checks, then one should consider what percentage of the password is affected by this sequence. For example, finding a letter sequence of length 4 in a password of length 32 is not a big deal and one may not want to force the user to change the password, but in a password of length 6 it is a significant portion of the password.     
 > <i>Summary:</i> Checks should be used to guide users in the right direction, but one must be aware that it is not always benefitial to enforce every check.
 
